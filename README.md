@@ -6,11 +6,11 @@
 
 설치도, 회원가입도, 서버 업로드도 없습니다. 사진은 이 기기 안에서만 처리됩니다.
 
-[![바로 쓰기](https://img.shields.io/badge/%EB%B0%94%EB%A1%9C_%EC%93%B0%EA%B8%B0-moocho-kosoo.github.io%2FKosoo-3ad6bd?style=for-the-badge&logo=googlechrome&logoColor=white&labelColor=0f1720)](https://moocho-kosoo.github.io/Kosoo/)
+[![바로 쓰기](https://img.shields.io/badge/%EB%B0%94%EB%A1%9C_%EC%93%B0%EA%B8%B0-moocho--kosoo.github.io-0d9488?style=for-the-badge&labelColor=111827&logo=googlechrome&logoColor=white)](https://moocho-kosoo.github.io/Kosoo/)
 
-![설치 없음](https://img.shields.io/badge/%EC%84%A4%EC%B9%98_%EC%97%86%EC%9D%8C-%ED%8C%8C%EC%9D%BC_%ED%95%98%EB%82%98%EB%A1%9C_%EC%8B%A4%ED%96%89-3ad6bd?style=flat-square&labelColor=0f1720)
-![회원가입 없음](https://img.shields.io/badge/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85_%EC%97%86%EC%9D%8C-%EB%A1%9C%EA%B7%B8%EC%9D%B8_%EB%B6%88%ED%95%84%EC%9A%94-3ad6bd?style=flat-square&labelColor=0f1720)
-![서버 없음](https://img.shields.io/badge/%EC%84%9C%EB%B2%84_%EC%97%86%EC%9D%8C-%EA%B8%B0%EA%B8%B0_%EC%95%88%EC%97%90%EC%84%9C%EB%A7%8C_%EC%B2%98%EB%A6%AC-3ad6bd?style=flat-square&labelColor=0f1720)
+![설치 없음](https://img.shields.io/badge/%EC%84%A4%EC%B9%98_%EC%97%86%EC%9D%8C-%ED%8C%8C%EC%9D%BC_%ED%95%98%EB%82%98%EB%A1%9C_%EC%8B%A4%ED%96%89-0d9488?style=flat-square&labelColor=111827)
+![회원가입 없음](https://img.shields.io/badge/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85_%EC%97%86%EC%9D%8C-%EB%A1%9C%EA%B7%B8%EC%9D%B8_%EB%B6%88%ED%95%84%EC%9A%94-0d9488?style=flat-square&labelColor=111827)
+![서버 없음](https://img.shields.io/badge/%EC%84%9C%EB%B2%84_%EC%97%86%EC%9D%8C-%EA%B8%B0%EA%B8%B0_%EC%95%88%EC%97%90%EC%84%9C%EB%A7%8C_%EC%B2%98%EB%A6%AC-0d9488?style=flat-square&labelColor=111827)
 
 <img src="docs/app.png" width="480" alt="사진 띠 분할 화면">
 
@@ -65,7 +65,7 @@
 
 Android Chrome, iOS Safari, 데스크톱 Chrome · Edge · Safari 최신 버전에서 동작합니다.
 
-- 여러 파일을 한꺼번에 저장할 때 브라우저가 **"여러 파일 다운로드 허용"**을 물으면 허용해 주세요.
+- 여러 파일을 한꺼번에 저장할 때 브라우저가 "여러 파일 다운로드 허용"을 물으면 허용해 주세요.
 - WebP 저장을 지원하지 않는 브라우저에서는 자동으로 PNG로 저장됩니다.
 
 ## 🔐 사진은 어디로도 가지 않습니다
