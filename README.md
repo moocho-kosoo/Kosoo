@@ -3,7 +3,7 @@
 사진 한 장을 세로 띠 · 가로 띠 · 격자로 정확하게 나눠서 ZIP · 개별 · 합본 한 장으로 저장하는 웹앱입니다.
 서버 없이 `index.html` 파일 하나로 동작하고, 사진은 기기 안에서만 처리됩니다(어디에도 전송되지 않음).
 
-- 웹에서 바로 쓰기: https://moocho-kosoo.github.io/photo-strip-splitter/
+- 웹에서 바로 쓰기: https://moocho-kosoo.github.io/Kosoo/
 - 파일로 받아 쓰기: `index.html` 하나만 저장해 브라우저로 열어도 됩니다.
   (로컬 파일로 열면 브라우저 보안 정책상 `공유하기`가 막히니, 공유하려면 위 웹 주소로 열어 주세요.)
 
