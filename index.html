@@ -219,33 +219,29 @@ input[type=range]:focus-visible{outline:2px solid rgba(58,214,189,.6);outline-of
 .empty-actions .btn{flex:0 1 auto;min-width:132px}
 
 /* ---------- preview strips ---------- */
-.strip-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));
-  gap:var(--pgap,6px);align-items:start
-}
+/* 띠 미리보기: 원본 사진이 띠로 갈라진 모습 그대로 한 장처럼 보이게 */
+.strip-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:var(--pgap,2px);min-width:0}
+.strip-grid.mode-v{flex-direction:row}
+.strip-grid.mode-h{flex-direction:column;align-items:stretch}
+.strip-grid.mode-g{display:grid;align-content:start}
 .strip{
-  display:flex;flex-direction:column;align-items:stretch;gap:4px;padding:0;border:0;
-  background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent;min-width:0;position:relative
+  display:flex;flex-direction:column;align-items:stretch;gap:2px;padding:0;border:0;
+  background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  min-width:0;position:relative;flex:1 1 0
 }
+.strip-grid.mode-h .strip{flex:0 0 auto}
+.strip-grid.mode-g .strip{flex:none}
 .strip-frame{
-  position:relative;display:block;width:100%;border-radius:5px;overflow:hidden;
-  border:1px solid rgba(255,255,255,.22);background:#101c26;
-  box-shadow:0 6px 16px -8px rgba(0,0,0,.9);
-  transition:border-color .15s,transform .12s
+  position:relative;display:block;width:100%;border-radius:2px;overflow:hidden;
+  background:transparent;transition:filter .15s,transform .12s
 }
 .strip-frame canvas{width:100%;height:100%;display:block}
-.strip:hover .strip-frame{border-color:rgba(58,214,189,.75)}
-.strip:active .strip-frame{transform:scale(.97)}
-.strip-num{
-  position:absolute;top:2px;left:2px;font:800 8.5px/1 ui-monospace,SFMono-Regular,monospace;
-  color:#04211c;background:rgba(58,214,189,.94);padding:1px 4px;border-radius:4px;
-  box-shadow:0 1px 4px rgba(0,0,0,.5);pointer-events:none
-}
+.strip:hover .strip-frame{filter:brightness(1.15)}
+.strip:active .strip-frame{transform:scale(.99)}
 .strip-meta{
-  font:700 9.5px/1.35 ui-monospace,SFMono-Regular,monospace;color:var(--dim2);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;letter-spacing:-.02em
+  font:800 var(--numfs,8.5px)/1.15 ui-monospace,SFMono-Regular,monospace;color:var(--dim2);
+  white-space:nowrap;overflow:hidden;text-align:center;letter-spacing:-.03em;min-width:0
 }
-.strip-meta b{color:#a9f5e7;font-weight:800}
 
 /* ---------- save buttons ---------- */
 .save-grid{display:grid;grid-template-columns:1fr;gap:8px}
@@ -363,18 +359,24 @@ body.share-lock{overflow:hidden}
   -webkit-tap-highlight-color:transparent
 }
 .share-x svg{width:15px;height:15px}
-.share-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:7px;align-content:start;
-  margin:12px 1px 0;padding:0 1px 2px;max-height:52vh;overflow-y:auto;overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;min-height:70px
+/* 합본 1장 큰 미리보기 */
+.share-preview{
+  position:relative;margin:12px 0 0;border-radius:14px;overflow:hidden;flex:0 1 auto;
+  border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;
+  min-height:120px;max-height:min(46vh,340px);background-color:#101c26;
+  background-image:
+    linear-gradient(45deg,rgba(255,255,255,.16) 25%,transparent 25%,transparent 75%,rgba(255,255,255,.16) 75%),
+    linear-gradient(45deg,rgba(255,255,255,.16) 25%,transparent 25%,transparent 75%,rgba(255,255,255,.16) 75%);
+  background-size:18px 18px;background-position:0 0,9px 9px
 }
-.share-item{position:relative;display:flex;flex-direction:column;gap:3px;min-width:0;padding:4px;border-radius:10px;background:rgba(0,0,0,.32);border:1px solid var(--line)}
-.share-item canvas{width:100%;height:auto;display:block;border-radius:6px;background:#0b141c}
-.share-item .sn{
-  position:absolute;top:6px;left:6px;font:800 8px/1 ui-monospace,SFMono-Regular,monospace;color:#04211c;
-  background:rgba(58,214,189,.94);padding:2px 3px;border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,.5)
+.share-preview img{display:block;width:100%;height:auto;max-height:min(46vh,340px);object-fit:contain}
+.share-wait{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--dim2);padding:28px 12px;text-align:center}
+.share-wait .spin2{
+  width:13px;height:13px;flex:0 0 auto;border-radius:50%;border:2px solid rgba(58,214,189,.25);
+  border-top-color:var(--accent);animation:sp .7s linear infinite;display:inline-block
 }
-.share-item .sm{font:700 8.5px/1.2 ui-monospace,SFMono-Regular,monospace;color:var(--dim2);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.share-facts{margin:8px 2px 0;font:700 10.5px/1.5 ui-monospace,SFMono-Regular,monospace;color:var(--dim2);word-break:break-word}
+.share-facts b{color:#a9f5e7;font-weight:800}
 .share-foot{margin-top:auto;padding-top:11px;flex:0 0 auto}
 .share-state{margin:0 0 9px;font-size:11.5px;line-height:1.5;color:var(--dim2);font-weight:700;min-height:17px}
 .share-state.ok{color:#a9f5e7}
@@ -398,18 +400,14 @@ body.share-lock{overflow:hidden}
   .wrap{padding:0 20px 8px}
 }
 
-/* ---------- 모바일: 20장을 5열 × 4줄로 한 화면에 ---------- */
+/* ---------- 모바일: 20장을 한 줄에 촘촘히, 합본 미리보기는 화면 높이에 맞춰 ---------- */
 @media (max-width:640px){
   .card{padding:13px 12px 14px;margin-bottom:10px}
-  .strip-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:min(var(--pgap,4px),4px)}
-  .strip{gap:0}
-  .strip-frame{border-radius:4px}
-  .strip-meta{display:none}
-  .strip-num{font-size:7.5px;padding:1px 3px;border-radius:3px;top:1px;left:1px}
-  .share-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;max-height:60vh;overflow-y:auto;margin-top:10px}
-  .share-item{padding:3px;gap:0}
-  .share-item .sm{display:none}
-  .share-item .sn{font-size:7.5px;top:4px;left:4px;padding:1px 3px}
+  .strip-frame{border-radius:2px}
+  .strip-meta{font-size:var(--numfs,7.5px)}
+  .share-preview{max-height:38vh;min-height:96px;margin-top:10px}
+  .share-preview img{max-height:38vh}
+  .share-facts{font-size:10px}
   .share-sheet{padding:8px 11px calc(11px + env(safe-area-inset-bottom))}
   .hero-actions .btn{flex:1 1 100%}
 }
@@ -517,8 +515,8 @@ body.share-lock{overflow:hidden}
       <div class="divider"></div>
 
       <div class="field">
-        <div class="row"><span class="lbl">미리보기 띠 사이 간격</span><span class="val" id="pgapVal">6px</span></div>
-        <input type="range" id="pgapRange" min="0" max="24" step="1" value="6" aria-label="미리보기 띠 사이 간격">
+        <div class="row"><span class="lbl">미리보기 띠 사이 간격</span><span class="val" id="pgapVal">2px</span></div>
+        <input type="range" id="pgapRange" min="0" max="16" step="1" value="2" aria-label="미리보기 띠 사이 간격">
       </div>
 
       <div class="field">
@@ -655,11 +653,17 @@ body.share-lock{overflow:hidden}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
       </button>
     </div>
-    <div class="share-grid" id="shareGrid"></div>
+    <div class="share-preview" id="sharePreview">
+      <img id="shareBig" class="hidden" alt="공유할 합본 이미지 미리보기">
+      <div class="share-wait" id="shareWait"><span class="spin2" aria-hidden="true"></span><span>띠를 한 장으로 합치는 중…</span></div>
+    </div>
+    <p class="share-facts" id="shareFacts"></p>
     <div class="share-foot">
       <p class="share-state" id="shareState">공유 창을 여는 중…</p>
       <div class="share-btns">
-        <button class="btn btn-primary" type="button" id="shareAgain">다시 공유하기</button>
+        <button class="btn btn-primary" type="button" id="shareAgain">합본 1장 공유하기</button>
+        <button class="btn btn-ghost" type="button" id="shareEach">낱장 공유</button>
+        <button class="btn btn-ghost" type="button" id="shareSave">합본 저장하기</button>
         <button class="btn btn-ghost" type="button" id="shareZip">ZIP 저장하기</button>
         <button class="btn btn-ghost" type="button" id="shareClose">닫기</button>
         <a class="btn btn-ghost hidden" id="shareWebLink" href="https://moocho-kosoo.github.io/Kosoo/" target="_blank" rel="noopener noreferrer">웹 주소로 열기 (HTTPS)</a>
@@ -683,7 +687,7 @@ var MAX_SIDE_OUT = 12000, MAX_AREA_OUT = 24e6;  // 합본 캔버스 한계
 var S = {
   src: null, srcW: 0, srcH: 0, srcId: 0, name: '', downscaled: false,
   mode: 'v', count: 5, cols: 4, rows: 3,
-  pgap: 6, order: [], orderKind: 'orig',
+  pgap: 2, order: [], orderKind: 'orig',
   format: 'png', prefix: 'photo',
   joinGap: 12, joinBg: 'transparent',
   results: [], busy: false
@@ -847,6 +851,7 @@ function applyOrder(kind){
   syncOrderChips();
   renderPreview();
   updateNotes();
+  scheduleShareBuild();
 }
 function syncOrderChips(){
   Array.prototype.forEach.call(document.querySelectorAll('#orderChips .chip'), function(b){
@@ -857,61 +862,29 @@ function syncOrderChips(){
 }
 
 /* ---------- 미리보기 ---------- */
-/* 띠의 평균 가로/세로 비율 (프레임 비율을 정할 때 쓴다) */
-function avgAspect(){
-  var list = cells(), ws = 0, hs = 0;
-  for(var i = 0; i < list.length; i++){ ws += list[i].w; hs += list[i].h; }
-  var r = hs > 0 ? ws / hs : 1.4;
-  return (isFinite(r) && r > 0) ? r : 1.4;
-}
-/* 모바일 5열에서도 한 화면에 들어오도록 모드별로 프레임 비율을 눌러 준다 (가로/세로) */
-function previewRatio(){
-  var r = avgAspect();
-  if(S.mode === 'v') return clamp(r, 0.60, 1.60);
-  if(S.mode === 'h') return clamp(r, 1.25, 3.20);
-  return clamp(r, 0.62, 1.60);
-}
-function shareRatio(){
-  var r = avgAspect();
-  if(S.mode === 'v') return clamp(r, 0.70, 1.50);
-  if(S.mode === 'h') return clamp(r, 1.30, 3.00);
-  return clamp(r, 0.68, 1.50);
-}
-/* 프레임 안에 띠를 가운데 맞춰 그린다.
-   띠가 아주 길쭉해 프레임의 절반도 못 채우면(예: 가로 사진을 20장 세로 띠로) 프레임을
-   채우고 가운데만 보여 준다. 썸네일이 실오라기처럼 보이지 않게 하기 위해서다. */
-function drawFit(ctx, cell, FW, FH){
-  ctx.clearRect(0, 0, FW, FH);
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = 'high';
-  var kc = Math.min(FW / cell.w, FH / cell.h);
-  var dw = cell.w * kc, dh = cell.h * kc;
-  if(Math.min(dw / FW, dh / FH) < 0.5){
-    var kv = Math.max(FW / cell.w, FH / cell.h);
-    var sw = Math.min(cell.w, FW / kv), sh = Math.min(cell.h, FH / kv);
-    var sx = cell.x + (cell.w - sw) / 2, sy = cell.y + (cell.h - sh) / 2;
-    ctx.drawImage(S.src, sx, sy, sw, sh, 0, 0, FW, FH);
-  }else{
-    ctx.drawImage(S.src, cell.x, cell.y, cell.w, cell.h,
-      Math.round((FW - dw) / 2), Math.round((FH - dh) / 2),
-      Math.max(1, Math.round(dw)), Math.max(1, Math.round(dh)));
-  }
-}
-
+/* 미리보기: 원본 사진이 띠로 갈라진 모습 그대로 한눈에 보이게 배치한다.
+   세로 띠 → 한 줄에 N개 나란히 / 가로 띠 → 한 줄에 N개 위아래 / 격자 → 열 × 행 바둑판 */
 function renderPreview(){
   if(!S.src) return;
   var list = cells();
   var ord = ensureOrder(list.length);
   var grid = $('stripGrid');
   grid.style.setProperty('--pgap', S.pgap + 'px');
+  grid.className = 'strip-grid mode-' + S.mode;
+  if(S.mode === 'g'){
+    grid.style.gridTemplateColumns = 'repeat(' + Math.max(1, S.cols) + ', minmax(0, 1fr))';
+  }else{
+    grid.style.gridTemplateColumns = '';
+  }
   grid.innerHTML = '';
 
   var frag = document.createDocumentFragment();
-  var ratio = previewRatio();                 /* 가로 / 세로 */
-  var FW = 200, FH = Math.max(1, Math.round(FW / ratio));
-
+  var K = 900;                                   /* 띠 하나를 그릴 때의 긴 변(px) */
   for(var pos = 0; pos < ord.length; pos++){
     var cell = list[ord[pos]];
+    var k = Math.min(1, K / Math.max(cell.w, cell.h));
+    var cw = Math.max(1, Math.round(cell.w * k));
+    var ch = Math.max(1, Math.round(cell.h * k));
 
     var btn = document.createElement('button');
     btn.type = 'button';
@@ -922,28 +895,25 @@ function renderPreview(){
 
     var frame = document.createElement('span');
     frame.className = 'strip-frame';
-    frame.style.aspectRatio = String(ratio);
+    frame.style.aspectRatio = String(cell.w / cell.h);
 
-    var cv = makeCanvas(FW, FH);
-    drawFit(cv.getContext('2d'), cell, FW, FH);
-
-    var num = document.createElement('span');
-    num.className = 'strip-num';
-    num.textContent = pos + 1;
+    var cv = makeCanvas(cw, ch);
+    cv.getContext('2d').drawImage(S.src, cell.x, cell.y, cell.w, cell.h, 0, 0, cw, ch);
 
     var meta = document.createElement('span');
     meta.className = 'strip-meta';
-    meta.innerHTML = '<b>' + (pos + 1) + '</b> ' + cell.w + '×' + cell.h;
+    meta.textContent = pos + 1;
 
     frame.appendChild(cv);
-    frame.appendChild(num);
     btn.appendChild(frame);
     btn.appendChild(meta);
     frag.appendChild(btn);
   }
+  /* 20장이 한 줄에 빽빽할 때 번호가 겹치지 않도록 번호 크기를 줄인다 */
+  var fs = ord.length > 14 ? 7.5 : (ord.length > 9 ? 8.5 : 10);
+  grid.style.setProperty('--numfs', fs + 'px');
   grid.appendChild(frag);
 }
-
 /* ---------- 안내 문구 ---------- */
 function updateNotes(){
   var list = cells(), total = list.length;
@@ -982,7 +952,7 @@ function syncControls(){
   $('rowsRange').value = S.rows;
   $('rowsRange').style.setProperty('--pct', ((S.rows - 1) / 9 * 100) + '%');
   $('pgapRange').value = S.pgap;
-  $('pgapRange').style.setProperty('--pct', (S.pgap / 24 * 100) + '%');
+  $('pgapRange').style.setProperty('--pct', (S.pgap / 16 * 100) + '%');
   $('joinGapRange').value = S.joinGap;
   $('joinGapRange').style.setProperty('--pct', (S.joinGap / 60 * 100) + '%');
 
@@ -1015,8 +985,8 @@ function prewarm(){
   clearTimeout(warmTimer);
   warmTimer = setTimeout(function(){
     if(!S.src || S.busy) return;
-    /* 띠·공유 파일을 미리 만들어 두면 공유하기를 눌렀을 때 곧바로 공유 창이 뜬다 */
-    prepareShare().catch(function(){});
+    /* 공유용 합본 1장을 미리 만들어 두면 공유하기를 눌렀을 때 곧바로 공유 창이 뜬다 */
+    ensureShareCache().catch(function(){});
   }, 420);
 }
 
@@ -1037,6 +1007,16 @@ function canvasToBlob(cv){
         if(b) res(b);
         else rej(new Error('이미지를 만들지 못했습니다.'));
       }, mime(), 0.93);
+    }catch(e){ rej(e); }
+  });
+}
+function encodeCanvas(cv, type, q){
+  return new Promise(function(res, rej){
+    try{
+      cv.toBlob(function(b){
+        if(b) res(b);
+        else rej(new Error('이미지를 만들지 못했습니다.'));
+      }, type, (typeof q === 'number') ? q : undefined);
     }catch(e){ rej(e); }
   });
 }
@@ -1084,57 +1064,65 @@ async function buildStripsWithProgress(progress, total){
 function joinKey(){
   return stripsKey() + '|' + S.joinGap + '|' + S.joinBg;
 }
-async function buildJoin(){
-  var list = cells(), ord = ensureOrder(list.length);
+/* 분할 좌표와 합본 크기를 한 번에 계산한다 */
+function joinGeometry(){
   var d = dims();
   var cols = d.cols, rows = d.rows;
   var bw = bounds(S.srcW, cols), bh = bounds(S.srcH, rows);
   var cw = [], rh = [], i;
   for(i = 0; i < cols; i++) cw.push(bw[i+1] - bw[i]);
   for(i = 0; i < rows; i++) rh.push(bh[i+1] - bh[i]);
-
   var gap = S.joinGap;
-  var totalW = cw.reduce(function(a,b){ return a+b; }, 0) + gap * (cols - 1);
-  var totalH = rh.reduce(function(a,b){ return a+b; }, 0) + gap * (rows - 1);
-
+  return {
+    cols: cols, rows: rows, cw: cw, rh: rh, gap: gap,
+    totalW: cw.reduce(function(a,b){ return a+b; }, 0) + gap * (cols - 1),
+    totalH: rh.reduce(function(a,b){ return a+b; }, 0) + gap * (rows - 1)
+  };
+}
+/* 합본 캔버스: maxSide·maxArea 안으로 줄여 그린다. opaque 면 투명 배경을 흰색으로 채운다 */
+function renderJoinCanvas(maxSide, maxArea, opaque){
+  var g = joinGeometry();
   var sc = 1;
-  sc = Math.min(sc, Math.sqrt(MAX_AREA_OUT / (totalW * totalH)));
-  if(totalW * sc > MAX_SIDE_OUT) sc = MAX_SIDE_OUT / totalW;
-  if(totalH * sc > MAX_SIDE_OUT) sc = MAX_SIDE_OUT / totalH;
+  sc = Math.min(sc, Math.sqrt(maxArea / (g.totalW * g.totalH)));
+  if(g.totalW * sc > maxSide) sc = maxSide / g.totalW;
+  if(g.totalH * sc > maxSide) sc = maxSide / g.totalH;
   if(!isFinite(sc) || sc <= 0) sc = 1;
 
-  var W = Math.max(1, Math.round(totalW * sc));
-  var H = Math.max(1, Math.round(totalH * sc));
+  var W = Math.max(1, Math.round(g.totalW * sc));
+  var H = Math.max(1, Math.round(g.totalH * sc));
   var cv = makeCanvas(W, H);
   var ctx = cv.getContext('2d');
   ctx.imageSmoothingQuality = 'high';
 
-  /* 배경 */
   var bg = S.joinBg;
   var transparent = (bg === 'transparent' || !bg);
-  if(transparent && ext() === 'jpg') bg = '#ffffff';
+  if(transparent && opaque) bg = '#ffffff';
   if(bg && bg !== 'transparent'){ ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H); }
 
-  /* 좌표 */
-  var xs = [], ys = [], acc = 0;
-  for(i = 0; i < cols; i++){ xs.push(acc); acc += cw[i] + gap; }
+  var xs = [], ys = [], acc = 0, i;
+  for(i = 0; i < g.cols; i++){ xs.push(acc); acc += g.cw[i] + g.gap; }
   acc = 0;
-  for(i = 0; i < rows; i++){ ys.push(acc); acc += rh[i] + gap; }
+  for(i = 0; i < g.rows; i++){ ys.push(acc); acc += g.rh[i] + g.gap; }
 
+  var list = cells(), ord = ensureOrder(list.length);
   for(var pos = 0; pos < ord.length; pos++){
     var cell = list[ord[pos]];
-    var col = pos % cols, row = Math.floor(pos / cols);
+    var col = pos % g.cols, row = Math.floor(pos / g.cols);
     var dx = xs[col], dy = ys[row];
     var dxs = Math.round(dx * sc), dys = Math.round(dy * sc);
     var dws = Math.round((dx + cell.w) * sc) - dxs;
     var dhs = Math.round((dy + cell.h) * sc) - dys;
     drawCellInto(ctx, cell, dxs, dys, Math.max(1, dws), Math.max(1, dhs));
   }
-  var blob = await canvasToBlob(cv);
-  cv.width = 0; cv.height = 0;
-  return { blob: blob, w: W, h: H, scaled: sc < 0.999, scale: sc };
+  return { cv: cv, w: W, h: H, scale: sc, scaled: sc < 0.999 };
 }
-
+/* 저장용 합본 (기기 캔버스 한계 안에서 가장 큰 크기) */
+async function buildJoin(){
+  var r = renderJoinCanvas(MAX_SIDE_OUT, MAX_AREA_OUT, ext() === 'jpg');
+  var blob = await encodeCanvas(r.cv, mime(), 0.93);
+  r.cv.width = 0; r.cv.height = 0;
+  return { blob: blob, w: r.w, h: r.h, scaled: r.scaled, scale: r.scale };
+}
 /* ============================================================
    ZIP (CRC32 + Store) 직접 구현
    ============================================================ */
@@ -1368,17 +1356,20 @@ async function saveJoin(){
   }
 }
 
-/* ---------- 4) 공유 (썸네일 미리보기 → 바로 공유) ----------
-   · 클릭 즉시 모달에 썸네일을 띄운다.
-   · 사진·설정이 바뀌면 띠 이미지와 공유 파일을 조용히 미리 만들어 두고,
-     공유하기를 누르면 같은 클릭 흐름에서 navigator.share 를 바로 호출해
-     user activation(사용자 제스처)을 잃지 않는다.
-   · canShare({ files }) 가 true → 이미지 파일 배열 그대로, false → ZIP 파일 1개.
-   · file:// · content:// 같은 비보안 컨텍스트에서는 브라우저가 공유를 막으므로 원인을 정확히 알린다. */
-var SHARE_ZIP_MAX_PREP = 120 * 1024 * 1024;  /* 이보다 크면 ZIP 준비를 건너뛴다 */
-var sharePrepared = null;      /* { key, items, shareFiles, kind, count, bytes, zip, zipFile, zipName } */
-var sharePayload = null;       /* 이번 공유에 쓰는 준비물 */
-var sharePrepPromise = null, sharePrepKey = null;
+/* ---------- 4) 공유 (합본 1장 → X·인스타·카톡이 확실히 뜨는 경로) ----------
+   · 안드로이드 공유 시트는 '이미지 1장'을 가장 확실하게 넘긴다. 낱장 20장 배열을 넘기면
+     앱에 따라 목록에서 아예 빠지거나 ZIP으로 폴백되므로, 기본은 언제나 합본 1장이다.
+   · 사진·설정이 바뀌면(디바운스) 공유용 합본 파일과 썸네일 URL을 미리 만들어 두고,
+     공유하기를 누른 그 클릭 흐름 안에서 navigator.share 를 불러 사용자 제스처를 살려 둔다.
+   · 합본이 5MB를 넘으면 JPG로 다시 인코딩·축소해 X 등 SNS 용량 한계 안으로 맞춘다. */
+var SHARE_MAX_SIDE  = 4096;              /* 공유용 합본 긴 변 상한 */
+var SHARE_MAX_AREA  = 8.5e6;             /* 공유용 합본 총 픽셀 상한 */
+var SHARE_MAX_BYTES = 5 * 1024 * 1024;   /* X 등 SNS 이미지 1장 용량 한계 */
+var SHARE_EACH_MAX  = 20;                /* 낱장 배열 공유 상한 */
+var SHARE_DEBOUNCE  = 240;
+
+var shareCache = null;                   /* {key,blob,url,file,type,ext,w,h,bytes,scale} */
+var shareBuildPromise = null, shareBuildKey = null, shareBuildTimer = null;
 var shareBusy = false;
 
 function shareSupported(){
@@ -1388,7 +1379,7 @@ function shareBlockMessage(){
   if(!window.isSecureContext){
     return '로컬 파일로 열면 브라우저 보안 정책상 공유하기가 차단됩니다. 웹(HTTPS) 주소로 열거나 아래 ZIP 저장하기를 이용해 주세요.';
   }
-  return '이 브라우저는 공유하기를 지원하지 않습니다. 아래 ZIP 저장하기로 받은 뒤 다른 앱에서 보내 주세요.';
+  return '이 브라우저는 공유하기를 지원하지 않습니다. 아래 합본 저장하기나 ZIP 저장하기로 받은 뒤 다른 앱에서 보내 주세요.';
 }
 function modeLabel(){
   if(S.mode === 'v') return '세로 띠';
@@ -1396,7 +1387,7 @@ function modeLabel(){
   return '격자 ' + S.cols + '×' + S.rows;
 }
 function canShareFiles(files){
-  if(!shareSupported() || !navigator.canShare || !files || !files.length) return false;
+  if(!navigator.canShare || !files || !files.length) return false;
   try{ return !!navigator.canShare({ files: files }); }catch(e){ return false; }
 }
 function shareState(kind, msg){
@@ -1405,186 +1396,278 @@ function shareState(kind, msg){
   el.className = 'share-state' + (kind ? ' ' + kind : '');
   el.textContent = msg;
 }
-function updateShareSummary(count, bytes, isZip){
-  var parts = [isZip ? 'ZIP' : ext().toUpperCase(), count + '장', modeLabel()];
-  if(bytes > 0) parts.push(fmtBytes(bytes));
-  $('shareSummary').textContent = parts.join(' · ');
+function shareMime(){
+  if(S.format === 'jpg') return 'image/jpeg';
+  if(S.format === 'webp' && webpOK) return 'image/webp';
+  return 'image/png';
+}
+function mimeExt(t){
+  return t === 'image/jpeg' ? 'jpg' : (t === 'image/webp' ? 'webp' : 'png');
+}
+function shareKey(){ return joinKey(); }
+function shareTitle(){ return safePrefix() + ' 합본 ' + cells().length + '장'; }
+function shareText(){ return modeLabel() + ' ' + cells().length + '장을 한 장으로 합쳤습니다'; }
+function shareFileName(c){
+  return safePrefix() + '_합본_' + cells().length + '장.' + (c.ext || mimeExt(c.type));
+}
+/* 파일 이름은 공유하는 순간의 앞부분을 따른다 (미리 만든 파일은 이름만 새로 씌운다) */
+function shareFileFor(c){
+  var name = shareFileName(c);
+  try{ return new File([c.blob], name, { type: c.type, lastModified: Date.now() }); }
+  catch(e){ return c.file; }
+}
+function scaleCanvas(src, k){
+  var cv = makeCanvas(src.width * k, src.height * k);
+  var c = cv.getContext('2d');
+  c.imageSmoothingEnabled = true;
+  c.imageSmoothingQuality = 'high';
+  c.drawImage(src, 0, 0, cv.width, cv.height);
+  return cv;
+}
+function flattenOnWhite(src){
+  var cv = makeCanvas(src.width, src.height);
+  var c = cv.getContext('2d');
+  c.fillStyle = '#ffffff';
+  c.fillRect(0, 0, cv.width, cv.height);
+  c.drawImage(src, 0, 0);
+  return cv;
 }
 
-/* 썸네일 그리드: 캔버스에서 바로 그려 즉시 표시 (모바일 5열 × 4줄 = 20장 한 화면) */
-function buildShareThumbs(){
-  var grid = $('shareGrid');
-  grid.innerHTML = '';
-  if(!S.src) return 0;
-  var list = cells(), ord = ensureOrder(list.length);
-  var ratio = shareRatio();
-  var FW = 190, FH = Math.max(1, Math.round(FW / ratio));
-  var frag = document.createDocumentFragment();
-  for(var pos = 0; pos < ord.length; pos++){
-    var cell = list[ord[pos]];
-    var item = document.createElement('div');
-    item.className = 'share-item';
+/* 공유용 합본 이미지 1장 만들기 (포맷 유지 → 5MB 넘으면 JPG·축소) */
+async function buildShareImage(){
+  var r = renderJoinCanvas(SHARE_MAX_SIDE, SHARE_MAX_AREA, false);
+  var want = shareMime();
+  var combos = [];
+  if(want !== 'image/jpeg') combos.push({ type: want, q: want === 'image/webp' ? 0.95 : null, k: 1 });
+  combos.push({ type: 'image/jpeg', q: 0.92, k: 1 });
+  combos.push({ type: 'image/jpeg', q: 0.86, k: 1 });
+  combos.push({ type: 'image/jpeg', q: 0.80, k: 1 });
+  combos.push({ type: 'image/jpeg', q: 0.90, k: 0.72 });
+  combos.push({ type: 'image/jpeg', q: 0.80, k: 0.72 });
+  combos.push({ type: 'image/jpeg', q: 0.86, k: 0.55 });
 
-    var cv = makeCanvas(FW, FH);
-    drawFit(cv.getContext('2d'), cell, FW, FH);
-
-    var num = document.createElement('span');
-    num.className = 'sn';
-    num.textContent = pos + 1;
-
-    var meta = document.createElement('span');
-    meta.className = 'sm';
-    meta.textContent = cell.w + '×' + cell.h;
-
-    item.appendChild(cv);
-    item.appendChild(num);
-    item.appendChild(meta);
-    frag.appendChild(item);
+  var best = null;
+  for(var i = 0; i < combos.length; i++){
+    var c = combos[i];
+    var cv = (c.k === 1) ? r.cv : scaleCanvas(r.cv, c.k);
+    var src = (c.type === 'image/jpeg' && (S.joinBg === 'transparent' || !S.joinBg)) ? flattenOnWhite(cv) : cv;
+    var blob = await encodeCanvas(src, c.type, c.q);
+    if(blob && (!best || blob.size < best.blob.size)){
+      best = { blob: blob, type: c.type, q: c.q, w: src.width, h: src.height, scale: r.scale * c.k };
+    }
+    if(blob && blob.size <= SHARE_MAX_BYTES) break;
   }
-  grid.appendChild(frag);
-  return ord.length;
+  if(!best) throw new Error('공유용 이미지를 만들지 못했습니다.');
+  if(best.scale === undefined) best.scale = r.scale;
+  best.bytes = best.blob.size;
+  return best;
+}
+
+function shareCacheSet(key, img){
+  var ext = mimeExt(img.type);
+  var blob = img.blob;
+  var file = null;
+  try{ file = new File([blob], safePrefix() + '_합본_' + cells().length + '장.' + ext, { type: img.type, lastModified: Date.now() }); }catch(e){ file = null; }
+  var url = URL.createObjectURL(blob);
+  var c = {
+    key: key, blob: blob, url: url, file: file, type: img.type, ext: ext,
+    w: img.w, h: img.h, bytes: blob.size, scale: img.scale
+  };
+  if(shareCache && shareCache.url){ try{ URL.revokeObjectURL(shareCache.url); }catch(e){} }
+  shareCache = c;
+  return c;
+}
+
+function ensureShareCache(){
+  if(!S.src) return Promise.resolve(null);
+  var key = shareKey();
+  if(shareCache && shareCache.key === key) return Promise.resolve(shareCache);
+  if(shareBuildPromise && shareBuildKey === key) return shareBuildPromise;
+  shareBuildKey = key;
+  var p = buildShareImage().then(function(img){ return shareCacheSet(key, img); });
+  shareBuildPromise = p;
+  return p.then(function(c){
+    if(shareBuildPromise === p) shareBuildPromise = null;
+    return c;
+  }, function(err){
+    if(shareBuildPromise === p) shareBuildPromise = null;
+    throw err;
+  });
+}
+
+/* 사진/설정이 바뀌면 조용히 미리 만들어 둔다 */
+function scheduleShareBuild(delay){
+  if(!S.src) return;
+  if(shareBuildTimer) clearTimeout(shareBuildTimer);
+  shareBuildTimer = setTimeout(function(){
+    shareBuildTimer = null;
+    if(!S.src || S.busy) return;
+    ensureShareCache().catch(function(){});
+  }, (typeof delay === 'number') ? delay : SHARE_DEBOUNCE);
+}
+
+function renderSharePreview(c){
+  var img = $('shareBig'), wait = $('shareWait');
+  if(!c || !c.url){
+    if(img) img.classList.add('hidden');
+    if(wait) wait.classList.remove('hidden');
+    return;
+  }
+  if(wait) wait.classList.add('hidden');
+  if(img){
+    if(img.getAttribute('src') !== c.url) img.setAttribute('src', c.url);
+    img.classList.remove('hidden');
+  }
+  var n = cells().length;
+  $('shareSummary').textContent = (c.ext || mimeExt(c.type)).toUpperCase() + ' · 합본 1장 · ' + modeLabel() + ' ' + n + '장';
+  var facts = [];
+  facts.push('합본 <b>' + c.w + '×' + c.h + '</b>');
+  facts.push('<b>' + fmtBytes(c.bytes) + '</b>');
+  if(c.scale && c.scale < 0.999) facts.push('원본의 ' + Math.round(c.scale * 100) + '% 크기');
+  if(c.type === 'image/jpeg' && S.format !== 'jpg') facts.push('공유용 JPG로 변환');
+  $('shareFacts').innerHTML = facts.join(' · ');
 }
 
 function openShareModal(){
-  sharePayload = null;
   shareBusy = false;
-  var again = $('shareAgain'), zbtn = $('shareZip');
-  again.disabled = true;
+  var again = $('shareAgain');
+  again.disabled = false;
   again.classList.remove('hidden');
-  again.textContent = '다시 공유하기';
-  zbtn.className = 'btn btn-ghost';
-  zbtn.disabled = false;
+  again.textContent = '합본 1장 공유하기';
+  $('shareZip').className = 'btn btn-ghost';
+  $('shareZip').disabled = false;
   $('shareWebLink').classList.add('hidden');
-  var n = buildShareThumbs();
-  $('shareSummary').textContent = ext().toUpperCase() + ' · ' + n + '장 · ' + modeLabel();
-  $('shareGrid').scrollTop = 0;
-  shareState('', '공유 창을 여는 중…');
+  var n = cells().length;
+  var each = $('shareEach');
+  each.textContent = '낱장 ' + n + '장 공유';
+  each.disabled = (n > SHARE_EACH_MAX);
+  each.title = (n > SHARE_EACH_MAX)
+    ? '낱장 공유는 ' + SHARE_EACH_MAX + '장까지입니다. 합본 1장으로 공유해 주세요.'
+    : n + '장을 각각의 이미지 파일로 넘깁니다';
+  $('shareSummary').textContent = mimeExt(shareMime()).toUpperCase() + ' · 합본 1장 · ' + modeLabel() + ' ' + n + '장';
+  $('shareFacts').textContent = '';
+  var c = (shareCache && shareCache.key === shareKey()) ? shareCache : null;
+  renderSharePreview(c);
+  shareState('', c ? '공유 창을 여는 중…' : '합본 이미지를 준비하는 중…');
   $('shareModal').classList.remove('hidden');
   document.body.classList.add('share-lock');
 }
 function closeShareModal(){
   var m = $('shareModal');
-  if(m.classList.contains('hidden')) return;
+  if(!m || m.classList.contains('hidden')) return;
   m.classList.add('hidden');
   document.body.classList.remove('share-lock');
 }
-
 function showShareBlocked(){
   $('shareAgain').classList.add('hidden');
   $('shareAgain').disabled = true;
+  $('shareEach').disabled = true;
   $('shareZip').className = 'btn btn-primary';
   $('shareZip').disabled = false;
   $('shareWebLink').classList.toggle('hidden', !!window.isSecureContext);
   shareState('err', shareBlockMessage());
 }
 
-/* ---------- 공유 준비물 만들기 (미리/즉석) ---------- */
-async function prepareShare(){
-  if(!S.src) return null;
-  var key = stripsKey();
-  if(sharePrepared && sharePrepared.key === key) return sharePrepared;
-  if(sharePrepPromise && sharePrepKey === key) return sharePrepPromise;
-
-  sharePrepKey = key;
-  var p = (async function(){
-    var items = await getStrips();
-    var total = items.length, bytes = 0, files = [], i;
-    for(i = 0; i < total; i++){
-      bytes += items[i].blob.size;
-      try{
-        files.push(new File([items[i].blob], stripName(i, total), { type: mime(), lastModified: Date.now() }));
-      }catch(e){ files = []; break; }
-    }
-    var b = {
-      key: key, items: items, count: total, bytes: bytes,
-      shareFiles: files, kind: files.length ? 'img' : 'zip',
-      zip: null, zipFile: null, zipName: null,
-      title: safePrefix() + ' ' + total + '장',
-      text: '사진 띠 분할 · ' + total + '장'
-    };
-    /* 이미지 파일 배열을 공유할 수 없을 때만 ZIP 1개로 준비 (공유 자체가 불가능한 환경에선 만들지 않음) */
-    if(shareSupported() && (!files.length || !canShareFiles(files)) && bytes <= SHARE_ZIP_MAX_PREP){
-      try{
-        var zip = await buildZip(items.map(function(it, idx){ return { name: stripName(idx, total), blob: it.blob }; }));
-        b.zip = zip;
-        b.zipName = safePrefix() + '_' + total + '장_' + ext().toUpperCase() + '.zip';
-        b.zipFile = new File([zip], b.zipName, { type: 'application/zip' });
-        b.kind = 'zip';
-      }catch(e){ /* ZIP 없이 이미지 배열로 시도 */ }
-    }
-    if(!sharePrepared || sharePrepared.key !== key) sharePrepared = b;
-    return sharePrepared;
-  })();
-  sharePrepPromise = p;
-  try{ return await p; }
-  finally{ if(sharePrepPromise === p) sharePrepPromise = null; }
-}
-
-/* 클릭 핸들러: await 없이 동기 흐름을 유지해 user activation 을 살려 둔다 */
-function shareNow(){
-  if(!S.src || S.busy) return;
-  openShareModal();                        /* 1) 썸네일 미리보기 즉시 표시 */
-
-  if(!shareSupported()){ showShareBlocked(); return; }
-
-  var key = stripsKey();
-  if(sharePrepared && sharePrepared.key === key){
-    sharePayload = sharePrepared;          /* 2) 준비된 파일로 바로 공유 */
-    updateShareSummary(sharePayload.count, sharePayload.kind === 'zip' && sharePayload.zip ? sharePayload.zip.size : sharePayload.bytes, sharePayload.kind === 'zip');
-    $('shareAgain').disabled = false;
-    trySharePayload();
-    return;
-  }
-
-  shareState('', '띠 이미지를 준비하는 중…');
-  prepareShare().then(function(b){
-    if(!b) throw new Error('준비 실패');
-    sharePayload = b;
-    updateShareSummary(b.count, b.kind === 'zip' && b.zip ? b.zip.size : b.bytes, b.kind === 'zip');
-    $('shareAgain').disabled = false;
-    trySharePayload();
-  }).catch(function(){
-    shareState('err', '이미지를 만들지 못했습니다. 아래 ZIP 저장하기를 이용해 주세요.');
-    $('shareAgain').disabled = false;
-  });
-}
-
-async function trySharePayload(){
-  var p = sharePayload;
-  if(!p){ shareState('warn', '아직 공유할 파일을 준비하는 중입니다.'); return; }
-  if(shareBusy) return;
-  if(!shareSupported()){ showShareBlocked(); return; }
-
-  var files = p.shareFiles || [], kind = p.kind;
-  if(!(kind === 'img' && files.length && canShareFiles(files))){
-    if(p.zipFile){
-      /* 이미지 배열 공유가 안 되면 ZIP 파일 1개로 넘긴다 (canShare 가 false 여도 한 번은 시도) */
-      files = [p.zipFile]; kind = 'zip';
-    }else{
-      $('shareZip').className = 'btn btn-primary';
-      shareState('warn', '이 브라우저에서는 파일 공유가 막혀 있습니다. 아래 ZIP 저장하기를 눌러 받은 뒤 다른 앱에서 보내 주세요.');
-      return;
-    }
-  }
-
+async function doShare(files, label){
+  if(shareBusy) return false;
+  if(!files || !files.length){ shareState('warn', '공유할 파일이 없습니다.'); return false; }
   shareBusy = true;
-  shareState('', kind === 'zip' ? 'ZIP 파일을 공유하는 중…' : ('이미지 ' + files.length + '장을 공유하는 중…'));
+  shareState('', label + '을(를) 공유 창으로 넘기는 중…');
   try{
-    await navigator.share({ files: files, title: p.title, text: p.text });
+    await navigator.share({ files: files, title: shareTitle(), text: shareText() });
     shareBusy = false;
-    shareState('ok', '공유했습니다 · ' + (kind === 'zip' ? 'ZIP 1개' : '이미지 ' + files.length + '장'));
+    shareState('ok', '공유했습니다 · ' + label);
     setTimeout(closeShareModal, 520);
+    return true;
   }catch(err){
     shareBusy = false;
     var nm = (err && err.name) ? err.name : '';
     if(nm === 'AbortError'){
-      shareState('warn', '공유를 취소했습니다. 다시 공유하기를 눌러 주세요.');
+      shareState('warn', '공유를 취소했습니다. 다시 눌러 주세요.');
     }else if(nm === 'NotAllowedError'){
-      shareState('warn', '공유 창을 열지 못했습니다. 다시 공유하기를 한 번 더 눌러 주세요.');
+      shareState('warn', '공유 창을 열지 못했습니다. 다시 한 번 눌러 주세요.');
     }else{
-      shareState('err', '공유 창을 열지 못했습니다. 다시 공유하기 또는 ZIP 저장하기를 이용해 주세요.');
+      shareState('err', '공유 창을 열지 못했습니다(' + (nm || '오류') + '). 합본 저장하기나 ZIP 저장하기를 이용해 주세요.');
     }
+    return false;
   }
+}
+
+/* 공유하기: 모달 + 썸네일을 즉시 띄우고, 준비된 합본 1장으로 바로 navigator.share */
+function shareNow(){
+  if(!S.src || S.busy) return;
+  openShareModal();
+  if(!shareSupported()){ showShareBlocked(); return; }
+  var key = shareKey();
+  if(shareCache && shareCache.key === key && shareCache.blob){
+    renderSharePreview(shareCache);              /* 이미 만들어 둔 합본 1장 */
+    doShare([shareFileFor(shareCache)], '합본 1장 · ' + fmtBytes(shareCache.bytes));
+    return;
+  }
+  ensureShareCache().then(function(c){
+    if(!c || !c.blob) throw new Error('no file');
+    renderSharePreview(c);
+    doShare([shareFileFor(c)], '합본 1장 · ' + fmtBytes(c.bytes));
+  }).catch(function(){
+    shareState('err', '합본 이미지를 만들지 못했습니다. 아래 합본 저장하기나 ZIP 저장하기를 이용해 주세요.');
+    $('shareZip').className = 'btn btn-primary';
+  });
+}
+
+/* 보조: 낱장 N장을 각각의 이미지 파일로 공유 (X 20장 업로드 등) */
+async function shareEachNow(){
+  var btn = $('shareEach');
+  if(btn.disabled) return;
+  var total = cells().length;
+  if(total > SHARE_EACH_MAX){
+    shareState('warn', '낱장 공유는 ' + SHARE_EACH_MAX + '장까지입니다(현재 ' + total + '장). 합본 1장으로 공유해 주세요.');
+    return;
+  }
+  if(!shareSupported()){ showShareBlocked(); return; }
+  btn.disabled = true;
+  shareState('', '낱장 ' + total + '장을 준비하는 중…');
+  var files;
+  try{
+    var items = await getStrips();
+    files = [];
+    for(var i = 0; i < items.length; i++){
+      files.push(new File([items[i].blob], stripName(i, items.length),
+        { type: items[i].blob.type || mime(), lastModified: Date.now() }));
+    }
+    if(!files.length) throw new Error('empty');
+  }catch(e){
+    btn.disabled = false;
+    shareState('err', '낱장 이미지를 만들지 못했습니다. 합본 1장으로 공유해 주세요.');
+    return;
+  }
+  await doShare(files, '낱장 ' + files.length + '장');
+  btn.disabled = (cells().length > SHARE_EACH_MAX);
+}
+
+/* 보조: 지금 공유할 합본 1장을 파일로 저장 */
+function doSaveComposite(c){
+  if(!c) return;
+  var name = shareFileName(c);
+  downloadBlob(c.blob, name);
+  pushResults([{ name: name, blob: c.blob, kind: 'img' }]);
+  toast(name + ' 저장을 시작했습니다 · ' + fmtBytes(c.bytes), 3000);
+  shareState('ok', '합본 1장을 저장했습니다 · ' + fmtBytes(c.bytes));
+}
+function saveShareComposite(){
+  var btn = $('shareSave');
+  if(btn.disabled) return;
+  var key = shareKey();
+  var c = (shareCache && shareCache.key === key) ? shareCache : null;
+  if(c){ doSaveComposite(c); return; }
+  btn.disabled = true;
+  shareState('', '합본 이미지를 준비하는 중…');
+  ensureShareCache().then(function(cc){
+    btn.disabled = false;
+    doSaveComposite(cc);
+  }).catch(function(){
+    btn.disabled = false;
+    shareState('err', '합본을 만들지 못했습니다. 잠시 뒤 다시 시도해 주세요.');
+  });
 }
 
 async function shareZipSave(){
@@ -1592,20 +1675,12 @@ async function shareZipSave(){
   if(btn.disabled) return;
   btn.disabled = true;
   try{
-    var p = sharePayload || sharePrepared;
-    if(p && p.zip){
-      downloadBlob(p.zip, p.zipName);
-      toast(p.zipName + ' 저장을 시작했습니다 · ' + fmtBytes(p.zip.size), 3000);
-      shareState('ok', 'ZIP을 저장했습니다 · ' + fmtBytes(p.zip.size));
-      return;
-    }
     shareState('', 'ZIP 파일을 만드는 중…');
-    var items = (p && p.items && p.items.length) ? p.items : await getStrips();
+    var items = await getStrips();
     var total = items.length;
     var zip = await buildZip(items.map(function(it, idx){ return { name: stripName(idx, total), blob: it.blob }; }));
     var zn = safePrefix() + '_' + total + '장_' + ext().toUpperCase() + '.zip';
     pushResults([{ name: zn, blob: zip, kind: 'zip' }]);
-    if(p){ p.zip = zip; p.zipName = zn; try{ p.zipFile = new File([zip], zn, { type: 'application/zip' }); }catch(e){} }
     downloadBlob(zip, zn);
     toast(zn + ' 저장을 시작했습니다 · ' + fmtBytes(zip.size), 3000);
     shareState('ok', 'ZIP을 저장했습니다 · ' + fmtBytes(zip.size));
@@ -1620,13 +1695,27 @@ function bindShareModal(){
   $('shareBackdrop').addEventListener('click', closeShareModal);
   $('shareClose').addEventListener('click', closeShareModal);
   $('shareCloseX').addEventListener('click', closeShareModal);
-  $('shareAgain').addEventListener('click', function(){ trySharePayload(); });
+  $('shareAgain').addEventListener('click', function(){
+    if(!shareSupported()){ showShareBlocked(); return; }
+    var key = shareKey();
+    if(shareCache && shareCache.key === key && shareCache.blob){
+      doShare([shareFileFor(shareCache)], '합본 1장 · ' + fmtBytes(shareCache.bytes));
+      return;
+    }
+    ensureShareCache().then(function(c){
+      renderSharePreview(c);
+      doShare([shareFileFor(c)], '합본 1장 · ' + fmtBytes(c.bytes));
+    }).catch(function(){
+      shareState('err', '합본 이미지를 만들지 못했습니다. 잠시 뒤 다시 시도해 주세요.');
+    });
+  });
+  $('shareEach').addEventListener('click', shareEachNow);
+  $('shareSave').addEventListener('click', saveShareComposite);
   $('shareZip').addEventListener('click', shareZipSave);
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape' && !$('shareModal').classList.contains('hidden')) closeShareModal();
   });
 }
-
 /* ============================================================
    이벤트
    ============================================================ */
@@ -1721,9 +1810,9 @@ function bind(){
 
   /* 미리보기 간격 */
   $('pgapRange').addEventListener('input', function(e){
-    S.pgap = clamp(parseInt(e.target.value, 10) || 0, 0, 24);
+    S.pgap = clamp(parseInt(e.target.value, 10) || 0, 0, 16);
     $('pgapVal').textContent = S.pgap + 'px';
-    e.target.style.setProperty('--pct', (S.pgap / 24 * 100) + '%');
+    e.target.style.setProperty('--pct', (S.pgap / 16 * 100) + '%');
     $('stripGrid').style.setProperty('--pgap', S.pgap + 'px');
   });
 
@@ -1740,6 +1829,7 @@ function bind(){
       S.format = f;
       stripCache = null; joinCache = null;
       syncControls(); updateNotes(); renderPreview();
+      scheduleShareBuild();
       if(f === 'webp' && !webpOK) toast('이 브라우저는 WebP 저장을 지원하지 않아 PNG로 저장됩니다.', 3200, true);
     });
   });
@@ -1758,18 +1848,21 @@ function bind(){
     $('joinGapVal').textContent = S.joinGap + 'px';
     e.target.style.setProperty('--pct', (S.joinGap / 60 * 100) + '%');
     joinCache = null;
+    scheduleShareBuild();
   });
   Array.prototype.forEach.call(document.querySelectorAll('#swatches .sw'), function(b){
     b.addEventListener('click', function(){
       S.joinBg = b.getAttribute('data-bg');
       joinCache = null;
       syncControls();
+      scheduleShareBuild();
     });
   });
   $('bgPicker').addEventListener('input', function(e){
     S.joinBg = e.target.value;
     joinCache = null;
     syncControls();
+    scheduleShareBuild();
   });
 
   /* 저장 버튼 */
@@ -1833,14 +1926,16 @@ else boot();
 window.__splitter = {
   state: S,
   shareNow: shareNow,
+  shareEachNow: shareEachNow,
   cells: cells,
   buildZip: buildZip,
   getStrips: getStrips,
   buildJoin: buildJoin,
-  prepareShare: prepareShare,
+  buildShareImage: buildShareImage,
+  ensureShareCache: ensureShareCache,
+  currentShare: function(){ return shareCache; },
+  renderPreview: renderPreview,
   shareBlockMessage: shareBlockMessage,
-  previewRatio: previewRatio,
-  shareRatio: shareRatio,
   crc32: crc32,
   useImage: useImage
 };
